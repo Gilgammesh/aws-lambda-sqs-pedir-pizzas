@@ -1,15 +1,17 @@
-# AWS Serverless Lambda - Nodejs - Typescript - SQS (Simple Service Queue) - Uuid
+# AWS Serverless Lambda - Nodejs - Typescript - Uuid - SQS (Simple Service Queue) - DynamoDB
 
-Función Lambda del tipo Rest Api. Usando el framework Serverless, con Nodejs, Typescript, uuid y SQS.
+Función Lambda del tipo Rest Api. Usando el framework Serverless, con Nodejs, Typescript, uuid, SQS, DynamoDB y DynamoDB Stream.
 
 ## Lógica
 
 - Realizar un pedido de pizzas, con una petición del tipo post.
 - Esto invocará el lambda function "hacerPedido", que generará una orden.
-- Enviaremos el Id de la orden por parámetros a una Cola (Queue) usando SQS.
+- Enviaremos el la orden del pedido por parámetros a una Cola (Queue) usando SQS.
 - La información se almacenará en la Cola "PendingOrdersQueue" declarada en nuestros recursos en `serverless.yml`
 - Creamos un lambda function "prepararPedido" que escuchará la cola "PendingOrdersQueue".
-- Obtenemos el Id de la orden y lo mostramos en consola.
+- Obtenemos los datos de la orden y almacenamos en DynamoDB en la tabla "CompletedOrderTable"
+- Al almacenar por eventos de DunamoDB Streams cambiaremos el estado de la orden a delivered.
+- Para finalizar crearemos otra Lambda para consultar el estado del pedido con el número de orden.
 
 ## Consideraciones Previas
 
@@ -44,6 +46,22 @@ Que es equivalente al script
 ```sh
 serverless deploy
 ```
+
+## Peticiones
+
+En la petición POST debemos enviar el cuerpo con la siguiente estructura:
+
+**Body**:
+
+```json
+{
+  "nombre": "Carlos Santander",
+  "direccion": "Av. Silicon Valley 123",
+  "pizzas": ["americana", "hawaiana", "carnivora"]
+}
+```
+
+**Headers**: Content-Type: application/json
 
 ## Plugins
 

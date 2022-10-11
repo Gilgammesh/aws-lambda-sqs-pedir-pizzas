@@ -7,7 +7,7 @@
     "deploy": "serverless deploy"
   },
   "keywords": [],
-  "author": "",
+  "author": "Carlos Santander",
   "license": "ISC",
   "dependencies": {
     "uuidv4": "^6.2.13"

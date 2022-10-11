@@ -6,14 +6,11 @@ jspm_packages
 .env
 .env.local
 .env.development
-.env.dev
-.env.prod
 
 # Serverless directories
 .serverless
 .build
 coverage
-package-lock.json
 out-logger.json
 .DS_Store
 
